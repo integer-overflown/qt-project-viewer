@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file alias="q_letter.png">images/q_letter.png</file>
+    </qresource>
+</RCC>
