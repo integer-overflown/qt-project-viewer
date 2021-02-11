@@ -39,6 +39,12 @@ Window {
             Layout.preferredWidth: credentials.itemWidth
             Layout.preferredHeight: credentials.itemHeight
             placeholderText: "Login"
+            font.italic: true
+            leftPadding: 12
+            background: Rectangle {
+                color: "#8eaed7"
+                radius: 2
+            }
         }
 
         TextField {
@@ -47,13 +53,34 @@ Window {
             Layout.preferredHeight: credentials.itemHeight
             placeholderText: "Password"
             echoMode: TextInput.Password
+            // TODO: the same style as for the text field above, maybe extract?
+            font.italic: true
+            leftPadding: 12
+            background: Rectangle {
+                color: "#8eaed7"
+                radius: 2
+            }
         }
 
         Button {
+            id: submit
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredWidth: credentials.itemWidth
             Layout.preferredHeight: credentials.itemHeight
-            text: "Login"
+            contentItem: Text {
+                text: "Login"
+                font.bold: true
+                color: "white"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
+            background: Rectangle {
+                color: submit.down ? "#00376f" : "#2a609e" //TODO: maybe add light variant for 'hovered' state
+                radius: 2
+            }
+            HoverHandler {
+                cursorShape: Qt.PointingHandCursor
+            }
         }
 
         Text {
