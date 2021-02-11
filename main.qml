@@ -1,4 +1,4 @@
-import QtQuick 2.12
+import QtQuick 2.15
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.3
@@ -54,6 +54,19 @@ Window {
             Layout.preferredWidth: credentials.itemWidth
             Layout.preferredHeight: credentials.itemHeight
             text: "Login"
+        }
+
+        Text {
+            id: restorePassword
+            Layout.alignment: Qt.AlignHCenter
+            font.pointSize: 10
+            text: "Forgot your password?"
+            opacity: hoverHandler.hovered ? 1 : 0.6
+            color: "white"
+            HoverHandler {
+                id: hoverHandler
+                cursorShape: Qt.PointingHandCursor
+            }
         }
     }
 }
