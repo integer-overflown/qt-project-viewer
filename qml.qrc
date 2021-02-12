@@ -7,5 +7,6 @@
     </qresource>
     <qresource prefix="/forms">
 	<file>LoginForm.qml</file>
+	<file>ProjectViewForm.qml</file>
     </qresource>
 </RCC>

@@ -41,20 +41,10 @@ Window {
 
     LoginForm {
         id: root
+        onSubmit: forms.replace(projectView)
     }
 
-    Component {
+    ProjectViewForm {
         id: projectView
-        Item {
-            Rectangle {
-                anchors.fill: parent
-                color: "green"
-            }
-            Text {
-                anchors.centerIn: parent
-                text: "Hello, second window!"
-                font.pointSize: 24
-            }
-        }
     }
 }

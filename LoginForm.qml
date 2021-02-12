@@ -4,81 +4,80 @@ import QtQuick.Controls 2.5
 
 import "qrc:/components" as CustomComponents
 
-Component {
-    Item {
-        Rectangle {
-            id: background
-            anchors.fill: parent
-            color: "steelblue"
+Item {
+    id: root
+    signal submit
+
+    Rectangle {
+        id: background
+        anchors.fill: parent
+        color: "steelblue"
+    }
+
+    ColumnLayout {
+        id: credentials
+        readonly property real itemWidth: window.width / 4
+        readonly property real itemHeight: 36
+
+        anchors.centerIn: parent
+        spacing: 16
+
+        Image {
+            id: letter
+            source: "qrc:/images/q_letter.png"
+            Layout.alignment: Qt.AlignHCenter
+            Layout.preferredWidth: 180
+            Layout.preferredHeight: 90
+            Layout.bottomMargin: 8
         }
 
-        ColumnLayout {
-            readonly property real itemWidth: window.width / 4
-            readonly property real itemHeight: 36
+        CustomComponents.CredentialsField {
+            Layout.alignment: Qt.AlignHCenter
+            Layout.preferredWidth: credentials.itemWidth
+            Layout.preferredHeight: credentials.itemHeight
+            placeholderText: "Login"
+        }
 
-            id: credentials
-            anchors.centerIn: parent
-            spacing: 16
+        CustomComponents.CredentialsField {
+            Layout.alignment: Qt.AlignHCenter
+            Layout.preferredWidth: credentials.itemWidth
+            Layout.preferredHeight: credentials.itemHeight
+            placeholderText: "Password"
+            echoMode: TextInput.Password
+        }
 
-            Image {
-                id: letter
-                source: "qrc:/images/q_letter.png"
-                Layout.alignment: Qt.AlignHCenter
-                Layout.preferredWidth: 180
-                Layout.preferredHeight: 90
-                Layout.bottomMargin: 8
-            }
-
-            CustomComponents.CredentialsField {
-                Layout.alignment: Qt.AlignHCenter
-                Layout.preferredWidth: credentials.itemWidth
-                Layout.preferredHeight: credentials.itemHeight
-                placeholderText: "Login"
-            }
-
-            CustomComponents.CredentialsField {
-                Layout.alignment: Qt.AlignHCenter
-                Layout.preferredWidth: credentials.itemWidth
-                Layout.preferredHeight: credentials.itemHeight
-                placeholderText: "Password"
-                echoMode: TextInput.Password
-            }
-
-            Button {
-                id: submit
-                Layout.alignment: Qt.AlignHCenter
-                Layout.preferredWidth: credentials.itemWidth
-                Layout.preferredHeight: credentials.itemHeight
-                contentItem: Text {
-                    text: "Login"
-                    font.bold: true
-                    color: "white"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                }
-                background: Rectangle {
-                    color: submit.down ? "#00376f" : "#2a609e" //TODO: maybe add light variant for 'hovered' state
-                    radius: 2
-                }
-                HoverHandler {
-                    cursorShape: Qt.PointingHandCursor
-                }
-                onClicked: {
-                    forms.replace(projectView)
-                }
-            }
-
-            Text {
-                id: restorePassword
-                Layout.alignment: Qt.AlignHCenter
-                font.pointSize: 10
-                text: "Forgot your password?"
-                opacity: hoverHandler.hovered ? 1 : 0.6
+        Button {
+            id: submit
+            Layout.alignment: Qt.AlignHCenter
+            Layout.preferredWidth: credentials.itemWidth
+            Layout.preferredHeight: credentials.itemHeight
+            contentItem: Text {
+                text: "Login"
+                font.bold: true
                 color: "white"
-                HoverHandler {
-                    id: hoverHandler
-                    cursorShape: Qt.PointingHandCursor
-                }
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
+            background: Rectangle {
+                color: submit.down ? "#00376f" : "#2a609e" //TODO: maybe add light variant for 'hovered' state
+                radius: 2
+            }
+            HoverHandler {
+                cursorShape: Qt.PointingHandCursor
+            }
+            onClicked: root.submit()
+        }
+
+        Text {
+            id: restorePassword
+            Layout.alignment: Qt.AlignHCenter
+            font.pointSize: 10
+            text: "Forgot your password?"
+            opacity: hoverHandler.hovered ? 1 : 0.6
+            color: "white"
+            HoverHandler {
+                id: hoverHandler
+                cursorShape: Qt.PointingHandCursor
             }
         }
     }
