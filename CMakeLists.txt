@@ -29,6 +29,9 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick REQUIRED)
 
 set(PROJECT_SOURCES
         main.cpp
+        Authenticator.hpp
+        Authenticator.cpp
+        private/Credentials.hpp
         qml.qrc
 )
 

@@ -39,6 +39,7 @@ Window {
         }
 
         CustomComponents.CredentialsField {
+            id: login
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredWidth: credentials.itemWidth
             Layout.preferredHeight: credentials.itemHeight
@@ -46,6 +47,7 @@ Window {
         }
 
         CustomComponents.CredentialsField {
+            id: password
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredWidth: credentials.itemWidth
             Layout.preferredHeight: credentials.itemHeight
@@ -71,6 +73,22 @@ Window {
             }
             HoverHandler {
                 cursorShape: Qt.PointingHandCursor
+            }
+            onClicked: {
+                authenticator.verify(login.text, password.text);
+            }
+            // handle authentication attemps
+            Connections {
+                target: authenticator // context object, set from main
+                function onSubmitted(token) {
+                    console.log("Success: ", token)
+                }
+                function onRejected() {
+                    console.log("Reject!");
+                }
+                function onError(error) {
+                    console.log("Error: ", error);
+                }
             }
         }
 
