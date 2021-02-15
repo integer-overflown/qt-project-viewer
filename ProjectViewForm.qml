@@ -8,7 +8,6 @@ Component {
             width: parent.width
             height: 40
             color: "lightgray"
-
             Row {
                 anchors.centerIn: parent
                 height: parent.height
@@ -30,22 +29,23 @@ Component {
         ScrollView {
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
             anchors.top: header.bottom
-            width: 2 * items.padding + items.itemSize
+            width: 2 * items.paddingX + items.itemSize
             height: parent.height - header.height
             clip: true
             ListView {
-                id: items
                 readonly property int itemSize: 32
-                readonly property int padding: 4
+                readonly property int paddingX: 16
+                readonly property int paddingY: 12
+                id: items
                 model: 20
-                spacing: 4
+                spacing: 8
                 anchors.fill: parent
                 header: Rectangle {
                     width: parent.width
-                    height: items.padding
+                    height: items.paddingY
                 }
                 delegate: Rectangle {
-                    x: items.padding
+                    x: items.paddingX
                     width: items.itemSize
                     height: items.itemSize
                     radius: items.itemSize / 2
