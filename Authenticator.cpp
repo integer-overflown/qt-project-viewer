@@ -5,16 +5,19 @@
 #include <QJsonObject>
 #include <QPointer>
 #include <QMetaEnum>
+#include <private/Credentials.hpp>
 
 static inline bool is_ignorable_ssl_error(const QSslError& e);
 
+Authenticator::Authenticator(QObject* parent)
+: QObject(parent), manager(new QNetworkAccessManager)
+{
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setUrl(QUrl { api::login });
+}
+
 void Authenticator::verify(QString login, QString password)
 {
-    QPointer<QNetworkAccessManager> manager = new QNetworkAccessManager;
-    QNetworkRequest request;
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    request.setUrl(address);
-
     QJsonDocument document(QJsonObject{
         {"login", login},
         {"password", password}

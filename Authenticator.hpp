@@ -4,7 +4,6 @@
 #include <QNetworkReply>
 #include <QUrl>
 #include <QtQml>
-#include <private/Credentials.hpp>
 
 class Authenticator : public QObject
 {
@@ -12,13 +11,15 @@ class Authenticator : public QObject
     QML_ELEMENT
     QML_SINGLETON
 public:
+    explicit Authenticator(QObject* parent = nullptr);
     Q_INVOKABLE void verify(QString login, QString password);
 signals:
     void submitted(QString token);
     void rejected();
     void error(QString errorString);
 private:
-    const QUrl address { api::login };
+    QScopedPointer<QNetworkAccessManager> manager;
+    QNetworkRequest request;
 };
 
 #endif // QMLTEST_AUTHENTICATOR_H
