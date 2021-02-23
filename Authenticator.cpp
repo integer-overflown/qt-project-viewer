@@ -23,7 +23,9 @@ void Authenticator::verify(QString login, QString password)
     QNetworkReply* reply = manager->post(request, document.toJson(QJsonDocument::Compact));
 
     // handle successful attempt
-    QObject::connect(reply, &QNetworkReply::finished, this, [this, reply]{ // TODO: maybe disconnect earlier?
+    QObject::connect(reply, &QNetworkReply::finished, this, [this, reply] {
+        if (reply->error() != QNetworkReply::NoError) return;
+
         QJsonParseError* error_ptr = nullptr;
         auto json = QJsonDocument::fromJson(reply->readAll(), error_ptr);
         if (json.isNull() && error_ptr)
@@ -36,9 +38,13 @@ void Authenticator::verify(QString login, QString password)
     });
 
     // handle network errors
-    QObject::connect(reply, &QNetworkReply::errorOccurred, this, [this](QNetworkReply::NetworkError error){
-        auto enumerator = QMetaEnum::fromType<QNetworkReply::NetworkError>();
-        emit this->error(enumerator.valueToKey(error));
+    QObject::connect(reply, &QNetworkReply::errorOccurred, this, [this](QNetworkReply::NetworkError error) {
+        if (error == QNetworkReply::AuthenticationRequiredError)
+            emit rejected();
+        else {
+            auto enumerator = QMetaEnum::fromType<QNetworkReply::NetworkError>();
+            emit this->error(enumerator.valueToKey(error));
+        }
     });
 
     // ignore allowed ssl errors
