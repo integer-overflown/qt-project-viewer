@@ -7,7 +7,7 @@ import com.overflown.qmlcomponents
 
 Item {
     id: root
-    signal submit
+    signal submit(string token)
 
     Rectangle {
         id: background
@@ -65,20 +65,20 @@ Item {
                 color: submit.down ? "#00376f" : "#2a609e" //TODO: maybe add light variant for 'hovered' state
                 radius: 2
             }
-            HoverHandler {
-                cursorShape: Qt.PointingHandCursor
-            }
             onClicked: {
                 Authenticator.verify(login.text, password.text);
+            }
+            HoverHandler {
+                cursorShape: Qt.PointingHandCursor
             }
             // handle authentication attemps
             Connections {
                 target: Authenticator
                 function onSubmitted(token) {
-                    console.log("Success: ", token)
+                    root.submit(token);
                 }
                 function onRejected() {
-                    console.log("Reject!");
+                    console.log("Reject!"); // TODO: display a message
                 }
                 function onError(error) {
                     console.log("Error: ", error);
