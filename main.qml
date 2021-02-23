@@ -41,10 +41,12 @@ Window {
 
     LoginForm {
         id: root
-        onSubmit: forms.replace(projectView)
-    }
-
-    ProjectViewForm {
-        id: projectView
+        onSubmit: {
+            const componentFactory = Qt.createComponent("qrc:/forms/ProjectViewForm.qml");
+            if (componentFactory.status === Component.Ready) {
+                const object = componentFactory.createObject(window, { token: token });
+                forms.replace(object);
+            }
+        }
     }
 }
