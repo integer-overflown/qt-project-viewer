@@ -32,6 +32,7 @@ set(PROJECT_SOURCES
         Authenticator.hpp
         Authenticator.cpp
         private/Credentials.hpp
+        private/Credentials.cpp
         qml.qrc
 )
 
