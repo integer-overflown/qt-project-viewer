@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.5
 
 import "qrc:/components" as CustomComponents
+import com.overflown.qmlcomponents
 
 Item {
     id: root
@@ -32,6 +33,7 @@ Item {
         }
 
         CustomComponents.CredentialsField {
+            id: login
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredWidth: credentials.itemWidth
             Layout.preferredHeight: credentials.itemHeight
@@ -39,6 +41,7 @@ Item {
         }
 
         CustomComponents.CredentialsField {
+            id: password
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredWidth: credentials.itemWidth
             Layout.preferredHeight: credentials.itemHeight
@@ -65,7 +68,22 @@ Item {
             HoverHandler {
                 cursorShape: Qt.PointingHandCursor
             }
-            onClicked: root.submit()
+            onClicked: {
+                Authenticator.verify(login.text, password.text);
+            }
+            // handle authentication attemps
+            Connections {
+                target: Authenticator
+                function onSubmitted(token) {
+                    console.log("Success: ", token)
+                }
+                function onRejected() {
+                    console.log("Reject!");
+                }
+                function onError(error) {
+                    console.log("Error: ", error);
+                }
+            }
         }
 
         Text {

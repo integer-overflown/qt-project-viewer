@@ -1,3 +1,6 @@
 cmake-build-*/
 *.user
 *.autosave
+
+# private headers
+private/
