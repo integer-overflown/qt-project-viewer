@@ -1,7 +1,10 @@
 import QtQuick
 import QtQuick.Controls
 
+import com.overflown.qmlcomponents
+
 Item {
+    id: root
     required property string token
 
     Rectangle {
@@ -38,19 +41,19 @@ Item {
             readonly property int paddingX: 16
             readonly property int paddingY: 12
             id: items
-            model: 20
+            model: ProjectModel {
+                token: root.token
+            }
             spacing: 8
             anchors.fill: parent
             header: Rectangle {
                 width: parent.width
                 height: items.paddingY
             }
-            delegate: Rectangle {
-                x: items.paddingX
-                width: items.itemSize
-                height: items.itemSize
-                radius: items.itemSize / 2
-                color: "green"
+            delegate: Image {
+                width: 64
+                height: 64
+                source: icon
             }
         }
     }

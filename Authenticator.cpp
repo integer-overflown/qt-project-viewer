@@ -14,7 +14,6 @@ Authenticator::Authenticator(QObject* parent)
 {
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     request.setUrl(QUrl { api::path(api::login) });
-    qDebug() << request.url();
 }
 
 void Authenticator::verify(QString login, QString password)

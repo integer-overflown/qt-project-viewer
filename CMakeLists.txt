@@ -31,6 +31,11 @@ set(PROJECT_SOURCES
         main.cpp
         Authenticator.hpp
         Authenticator.cpp
+        ProjectContentProvider.hpp
+        ProjectContentProvider.cpp
+        Project.hpp
+        ProjectModel.hpp
+        ProjectModel.cpp
         private/Credentials.hpp
         private/Credentials.cpp
         qml.qrc
