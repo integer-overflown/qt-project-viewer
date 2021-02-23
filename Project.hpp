@@ -14,7 +14,7 @@ struct Project
 public:
     Project(const int id, const QString& name, const QUrl& icon)
         : id(id), name(name), icon(icon) {}
-
+private:
     int id;
     QString name;
     QUrl icon;

@@ -11,7 +11,7 @@ class ProjectModel : public QAbstractListModel
     QML_ELEMENT
 public:
     enum Roles {
-        Name=Qt::UserRole + 1, Icon
+        Data = Qt::UserRole + 1
     };
     int rowCount(const QModelIndex&) const override;
     QVariant data(const QModelIndex&, int) const override;

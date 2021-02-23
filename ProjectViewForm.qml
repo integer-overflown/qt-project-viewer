@@ -51,9 +51,10 @@ Item {
                 height: items.paddingY
             }
             delegate: Image {
+                required property var project
                 width: 64
                 height: 64
-                source: icon
+                source: project.icon
             }
         }
     }
