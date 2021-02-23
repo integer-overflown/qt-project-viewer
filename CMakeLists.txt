@@ -36,6 +36,8 @@ set(PROJECT_SOURCES
         Project.hpp
         ProjectModel.hpp
         ProjectModel.cpp
+        RoundImage.hpp
+        RoundImage.cpp
         private/Credentials.hpp
         private/Credentials.cpp
         qml.qrc

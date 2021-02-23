@@ -50,7 +50,7 @@ Item {
                 width: parent.width
                 height: items.paddingY
             }
-            delegate: Image {
+            delegate: RoundImage {
                 required property var project
                 width: 64
                 height: 64
