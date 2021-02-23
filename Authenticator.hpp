@@ -3,10 +3,14 @@
 #include <QObject>
 #include <QNetworkReply>
 #include <QUrl>
+#include <QtQml>
+#include <private/Credentials.hpp>
 
 class Authenticator : public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
+    QML_SINGLETON
 public:
     Q_INVOKABLE void verify(QString login, QString password);
 signals:
@@ -14,7 +18,7 @@ signals:
     void rejected();
     void error(QString errorString);
 private:
-    static const QUrl address;
+    const QUrl address { api::login };
 };
 
 #endif // QMLTEST_AUTHENTICATOR_H

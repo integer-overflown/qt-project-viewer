@@ -55,3 +55,9 @@ target_compile_definitions(qmltest
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(qmltest
   PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick)
+set_target_properties(qmltest PROPERTIES
+    QT_QML_MODULE_VERSION 1.0
+    QT_QML_MODULE_URI com.overflown.qmlcomponents
+)
+qt6_qml_type_registration(qmltest)
+

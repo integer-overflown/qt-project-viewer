@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.3
 import QtQml 2.3
 
 import "components" as CustomComponents
+import com.overflown.qmlcomponents
 
 Window {
     id: root
@@ -75,11 +76,11 @@ Window {
                 cursorShape: Qt.PointingHandCursor
             }
             onClicked: {
-                authenticator.verify(login.text, password.text);
+                Authenticator.verify(login.text, password.text);
             }
             // handle authentication attemps
             Connections {
-                target: authenticator // context object, set from main
+                target: Authenticator
                 function onSubmitted(token) {
                     console.log("Success: ", token)
                 }
