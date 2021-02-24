@@ -3,6 +3,7 @@
 #include <QAbstractListModel>
 #include <QtQml>
 #include <Project.hpp>
+#include <ProjectContentProvider.hpp>
 
 class ProjectModel : public QAbstractListModel
 {
@@ -10,8 +11,9 @@ class ProjectModel : public QAbstractListModel
     Q_PROPERTY(QString token WRITE setToken MEMBER _token NOTIFY tokenChanged)
     QML_ELEMENT
 public:
+    using Data = ProjectContentProvider::Data;
     enum Roles {
-        Data = Qt::UserRole + 1
+        DataRole = Qt::UserRole + 1
     };
     int rowCount(const QModelIndex&) const override;
     QVariant data(const QModelIndex&, int) const override;

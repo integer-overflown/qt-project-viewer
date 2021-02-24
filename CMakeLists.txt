@@ -38,6 +38,10 @@ set(PROJECT_SOURCES
         ProjectModel.cpp
         RoundImage.hpp
         RoundImage.cpp
+        TicketContentProvider.hpp
+        TicketContentProvider.cpp
+        Ticket.hpp
+        ContentProvider.hpp
         private/Credentials.hpp
         qml.qrc
 )
