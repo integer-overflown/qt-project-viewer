@@ -63,7 +63,7 @@ void RoundImage::setSource(QString source)
     auto scheme = url.scheme();
 
     if (
-            (scheme == "qrc" && image->load(":" + url.path()))
+            (scheme == "qrc" && image->load(_source.sliced(3))) // results in resource ref without scheme
             || ((scheme.isEmpty() || url.isLocalFile()) && image->load(url.path()))
     ) {
         _image_ptr = image;
