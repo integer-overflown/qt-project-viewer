@@ -36,7 +36,6 @@ void RoundImage::doAsyncPaint(const QUrl& url, QSharedPointer<QImage> image)
             update();
         } else
             qCritical() << "Failed to read an image from path" << _source;
-        reply->deleteLater();
         manager->deleteLater();
     };
     auto onError = [](QNetworkReply::NetworkError code)
