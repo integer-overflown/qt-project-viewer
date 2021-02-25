@@ -15,19 +15,17 @@ class ContentProvider
 protected:
     using Data = QVector<ObjectType>;
 
-    template<typename... Chunk>
-    ContentProvider(const QString& type, const QString& token, Chunk... chunks);
+    ContentProvider(const QString& path, const QString& token, const QString& type);
 
     virtual ObjectType handleNextObject(const QJsonObject&) const = 0;
     virtual void ready(Data) = 0;
 };
 
 template<typename ObjectType>
-template<typename... Chunk>
-ContentProvider<ObjectType>::ContentProvider(const QString& type, const QString& token, Chunk... chunks)
+ContentProvider<ObjectType>::ContentProvider(const QString& path, const QString& token, const QString& type)
 {
     QPointer manager { new QNetworkAccessManager };
-    QNetworkRequest request(QUrl { api::path(chunks...) });
+    QNetworkRequest request(QUrl { path });
     request.setRawHeader("Authorization", token.toUtf8());
 
     auto reply = manager->get(request);
