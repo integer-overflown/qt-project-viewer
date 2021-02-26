@@ -41,6 +41,8 @@ set(PROJECT_SOURCES
         TicketContentProvider.hpp
         TicketContentProvider.cpp
         Ticket.hpp
+        TicketModel.hpp
+        TicketModel.cpp
         ContentProvider.hpp
         private/Credentials.hpp
         qml.qrc

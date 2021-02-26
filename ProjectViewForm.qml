@@ -48,7 +48,10 @@ Item {
                 source: project.icon
             }
             TapHandler {
-                onTapped: delegate.ListView.view.currentIndex = index;
+                onTapped: {
+                    delegate.ListView.view.currentIndex = index;
+                    ticketModel.projectId = delegate.project.id;
+                }
             }
             HoverHandler {
                 cursorShape: Qt.PointingHandCursor
@@ -78,5 +81,9 @@ Item {
             }
             delegate: projectItemDelegate
         }
+    }
+    TicketModel {
+        id: ticketModel
+        token: root.token
     }
 }
