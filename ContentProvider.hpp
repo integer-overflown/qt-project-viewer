@@ -42,12 +42,11 @@ ContentProvider<ObjectType>::ContentProvider(const QString& path, const QString&
         auto array = rawArray.toArray();
         for (const auto& entry : array)
             objects.append(handleNextObject(entry.toObject()));
-
         ready(std::move(objects));
         manager->deleteLater();
     });
-    QObject::connect(reply, &QNetworkReply::errorOccurred, [](QNetworkReply::NetworkError code){
-        qCritical() << code;
+    QObject::connect(reply, &QNetworkReply::errorOccurred, [path](QNetworkReply::NetworkError code){
+        qCritical() << "Error when fetching " << path << ":" << code;
     });
     QObject::connect(reply, &QNetworkReply::sslErrors, [reply](const QList<QSslError>& list) { // TODO: duplicate code
         reply->ignoreSslErrors(list);
