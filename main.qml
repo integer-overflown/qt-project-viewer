@@ -43,9 +43,13 @@ Window {
         id: root
         onSubmit: {
             const componentFactory = Qt.createComponent("qrc:/forms/ProjectViewForm.qml");
-            if (componentFactory.status === Component.Ready) {
+            switch(componentFactory.status) {
+            case Component.Ready:
                 const object = componentFactory.createObject(window, { token: token });
                 forms.replace(object);
+                return;
+            case Component.Error:
+                console.log(componentFactory.errorString());
             }
         }
     }
