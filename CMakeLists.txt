@@ -43,6 +43,10 @@ set(PROJECT_SOURCES
         Ticket.hpp
         TicketModel.hpp
         TicketModel.cpp
+        IndicesListModel.hpp
+        IndicesListModel.cpp
+        DataListModelTemplate.hpp
+        DataListModelTemplate.cpp
         ContentProvider.hpp
         private/Credentials.hpp
         qml.qrc

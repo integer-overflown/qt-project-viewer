@@ -1,4 +1,8 @@
 #include <TicketModel.hpp>
+#include <TicketContentProvider.hpp>
+
+TicketModel::TicketModel()
+: DataListModelTemplate<Ticket>("ticket") {}
 
 void TicketModel::setId(int id)
 {
@@ -10,38 +14,9 @@ void TicketModel::setId(int id)
             qWarning() << "Attempting to fetch tickets for project[id:" << id << "] with invalid token";
 
         QPointer provider { new TicketContentProvider(_token, id) };
-        QObject::connect(provider, &TicketContentProvider::success, [=](TicketModel::Data data){
-            auto last = data.size() - 1;
-            beginInsertRows(QModelIndex{}, 0, last);
-            modelData = std::move(data);
-            endInsertRows();
-            emit dataChanged(createIndex(0, 0), createIndex(last, 0));
+        QObject::connect(provider, &TicketContentProvider::success, this, [=](auto data){
+            setData(std::move(data));
             provider->deleteLater();
         });
-    }
-}
-
-int TicketModel::rowCount(const QModelIndex &parent) const
-{
-    if (parent.isValid())
-        return 0;
-    return modelData.size();
-}
-
-QHash<int, QByteArray> TicketModel::roleNames() const
-{
-    static const QHash<int, QByteArray> value = {
-        { DataRole, "ticket" }
-    };
-    return value;
-}
-
-QVariant TicketModel::data(const QModelIndex& index, int role) const
-{
-    switch (role) {
-    case DataRole:
-        return QVariant::fromValue(modelData[index.row()]);
-    default:
-        return QVariant();
     }
 }
