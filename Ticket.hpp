@@ -9,9 +9,10 @@ struct Ticket
     Q_PROPERTY(QString name MEMBER name)
     Q_PROPERTY(QString description MEMBER description)
 public:
+    static constexpr auto aggregate = "tickets";
+
     Ticket(int id, int priority, QString name, QString description)
-    : id(id), priority(priority), name(std::move(name)), description(std::move(description))
-    {}
+    : id(id), priority(priority), name(std::move(name)), description(std::move(description)) {}
 private:
     int id;
     int priority;

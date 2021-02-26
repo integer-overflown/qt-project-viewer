@@ -12,6 +12,8 @@ struct Project
     Q_PROPERTY(QUrl icon MEMBER icon)
 
 public:
+    static constexpr auto aggregate = "projects";
+
     Project(const int id, const QString& name, const QUrl& icon)
         : id(id), name(name), icon(icon) {}
 private:

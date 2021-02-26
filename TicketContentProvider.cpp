@@ -2,7 +2,7 @@
 #include <private/Credentials.hpp>
 
 TicketContentProvider::TicketContentProvider(const QString& token, const int id, QObject* parent)
-: QObject(parent), ContentProvider<Ticket>(api::path(api::tickets, QString::number(id)), token, "tickets")
+    : QObject(parent), ContentProvider<Ticket>(api::path(api::tickets, QString::number(id)), token)
 {}
 
 Ticket TicketContentProvider::handleNextObject(const QJsonObject& o) const
