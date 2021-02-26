@@ -7,10 +7,11 @@
 #include <QPointer>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <ApiClient.hpp>
 #include <private/Credentials.hpp>
 
 template<typename ObjectType>
-class ContentProvider
+class ContentProvider : public ApiClient
 {
 protected:
     using Data = QVector<ObjectType>;
@@ -23,9 +24,8 @@ protected:
 
 template<typename ObjectType>
 ContentProvider<ObjectType>::ContentProvider(const QString& path, const QString& token, const QString& type)
+    : ApiClient(path)
 {
-    QPointer manager { new QNetworkAccessManager };
-    QNetworkRequest request(QUrl { path });
     request.setRawHeader("Authorization", token.toUtf8());
 
     auto reply = manager->get(request);
@@ -47,9 +47,6 @@ ContentProvider<ObjectType>::ContentProvider(const QString& path, const QString&
     });
     QObject::connect(reply, &QNetworkReply::errorOccurred, [path](QNetworkReply::NetworkError code){
         qCritical() << "Error when fetching " << path << ":" << code;
-    });
-    QObject::connect(reply, &QNetworkReply::sslErrors, [reply](const QList<QSslError>& list) { // TODO: duplicate code
-        reply->ignoreSslErrors(list);
     });
 }
 

@@ -7,13 +7,10 @@
 #include <QMetaEnum>
 #include <private/Credentials.hpp>
 
-static inline bool is_ignorable_ssl_error(const QSslError& e);
-
 Authenticator::Authenticator(QObject* parent)
-: QObject(parent), manager(new QNetworkAccessManager)
+    : QObject(parent), ApiClient(api::path(api::login))
 {
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    request.setUrl(QUrl { api::path(api::login) });
 }
 
 void Authenticator::verify(QString login, QString password)
@@ -49,17 +46,4 @@ void Authenticator::verify(QString login, QString password)
             emit this->error(enumerator.valueToKey(error));
         }
     });
-
-    // ignore allowed ssl errors
-    QObject::connect(reply, &QNetworkReply::sslErrors, this, [reply](const QList<QSslError> &errorList) {
-       if (std::all_of(errorList.constBegin(), errorList.constEnd(), is_ignorable_ssl_error))
-           reply->ignoreSslErrors(errorList);
-    });
 }
-
-bool is_ignorable_ssl_error(const QSslError& e)
-{
-    int c = e.error();
-    return c == QSslError::CertificateUntrusted || c == QSslError::SelfSignedCertificate;
-}
-

@@ -4,8 +4,9 @@
 #include <QNetworkReply>
 #include <QUrl>
 #include <QtQml>
+#include <ApiClient.hpp>
 
-class Authenticator : public QObject
+class Authenticator : public QObject, public ApiClient
 {
     Q_OBJECT
     QML_ELEMENT
@@ -17,9 +18,6 @@ signals:
     void submitted(QString token);
     void rejected();
     void error(QString errorString);
-private:
-    QScopedPointer<QNetworkAccessManager> manager;
-    QNetworkRequest request;
 };
 
 #endif // QMLTEST_AUTHENTICATOR_H

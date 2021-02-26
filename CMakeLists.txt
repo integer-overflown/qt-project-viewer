@@ -31,6 +31,8 @@ set(PROJECT_SOURCES
         main.cpp
         Authenticator.hpp
         Authenticator.cpp
+        ApiClient.hpp
+        ApiClient.cpp
         ProjectContentProvider.hpp
         ProjectContentProvider.cpp
         Project.hpp
@@ -46,7 +48,6 @@ set(PROJECT_SOURCES
         IndicesListModel.hpp
         IndicesListModel.cpp
         DataListModelTemplate.hpp
-        DataListModelTemplate.cpp
         ContentProvider.hpp
         private/Credentials.hpp
         qml.qrc
