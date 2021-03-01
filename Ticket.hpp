@@ -6,6 +6,7 @@ struct Ticket
 {
     Q_GADGET
     Q_PROPERTY(int id MEMBER id)
+    Q_PROPERTY(int priority MEMBER priority)
     Q_PROPERTY(QString name MEMBER name)
     Q_PROPERTY(QString description MEMBER description)
 public:

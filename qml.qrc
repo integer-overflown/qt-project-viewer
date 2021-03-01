@@ -4,6 +4,7 @@
         <file>images/q_letter.png</file>
 	<!-- QML resources -->
 	<file>components/CredentialsField.qml</file>
+	<file>components/Separator.qml</file>
     </qresource>
     <qresource prefix="/forms">
 	<file>LoginForm.qml</file>
