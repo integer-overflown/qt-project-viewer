@@ -49,6 +49,8 @@ set(PROJECT_SOURCES
         IndicesListModel.cpp
         DataListModelTemplate.hpp
         ContentProvider.hpp
+        PriorityWidget.hpp
+        PriorityWidget.cpp
         private/Credentials.hpp
         qml.qrc
 )

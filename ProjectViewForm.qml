@@ -127,7 +127,7 @@ Item {
                 topPadding: 8
                 bottomPadding: 4
                 leftPadding: 8
-                spacing: 4
+                spacing: 8
                 Text {
                     text: delegate.ticket.name
                     font {
@@ -144,8 +144,10 @@ Item {
                         pointSize: 12
                     }
                 }
-                Text {
-                    text: delegate.ticket.priority
+                PriorityWidget {
+                    priority: ticket.priority
+                    width: 64
+                    height: 32
                 }
             }
         }
