@@ -6,7 +6,7 @@ TicketModel::TicketModel()
 
 void TicketModel::setId(int id)
 {
-    if (_id != id) {
+    if (!(_id == id || id == invalid)) {
         _id = id;
         emit projectIdChanged();
 
