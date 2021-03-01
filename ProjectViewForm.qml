@@ -1,4 +1,4 @@
-import QtQuick
+﻿import QtQuick
 import QtQuick.Controls
 
 import com.overflown.qmlcomponents
@@ -48,10 +48,7 @@ Item {
                 source: project.icon
             }
             TapHandler {
-                onTapped: {
-                    delegate.ListView.view.currentIndex = index;
-                    ticketModel.projectId = delegate.project.id;
-                }
+                onTapped: delegate.ListView.view.currentIndex = index;
             }
             HoverHandler {
                 cursorShape: Qt.PointingHandCursor
@@ -59,6 +56,7 @@ Item {
         }
     }
     ScrollView {
+        id: itemsScroll
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
         anchors.top: header.bottom
         width: items.itemWidth()
@@ -82,8 +80,23 @@ Item {
             delegate: projectItemDelegate
         }
     }
-    TicketModel {
-        id: ticketModel
-        token: root.token
+    ScrollView {
+        anchors {
+            top: header.bottom
+            left: itemsScroll.right
+            right: parent.right
+            bottom: parent.bottom
+        }
+        ListView {
+            model: TicketModel {
+                id: ticketModel
+                token: root.token
+                // prevent reading model data if the list hasn't been initialized yet
+                projectId: items.currentItem ? items.currentItem.project.id : invalid
+            }
+            delegate: Text {
+                text: ticket.name
+            }
+        }
     }
 }
