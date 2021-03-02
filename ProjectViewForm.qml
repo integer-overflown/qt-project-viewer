@@ -8,11 +8,57 @@ Item {
     id: root
     required property string token
 
+    states: [
+        State {
+            name: "loading"
+            StateChangeScript {
+                script: {
+                    tickets.model.clear();
+                }
+            }
+        },
+        State {
+            name: "ready"
+        },
+        State {
+            name: "noTicketsPresent"
+        }
+    ]
+
+    state: "loading"
+
     // background
     Rectangle {
         anchors.fill: parent
         color: "lightgray"
     }
+
+    Rectangle {
+        id: contentArea
+        anchors {
+            top: header.bottom
+            right: parent.right
+            bottom: parent.bottom
+            left: itemsScroll.right
+        }
+        color: 'transparent'
+    }
+
+    BusyIndicator {
+        anchors.centerIn: contentArea
+        running: root.state === "loading"
+    }
+
+    Text {
+        anchors.centerIn: contentArea
+        font {
+            pointSize: 14
+            italic: true
+        }
+        text: "Nothing here yet\u2026" // unicode symbol stands for ellipsis
+        visible: root.state === "noTicketsPresent"
+    }
+
     Rectangle {
         id: header
         width: parent.width
@@ -54,12 +100,14 @@ Item {
             model: TicketModel {
                 id: ticketModel
                 token: root.token
-                // prevent reading model data if the list hasn't been initialized yet
-                projectId: items.currentItem ? items.currentItem.project.id : invalid
             }
             spacing: itemSpacing
             delegate: TicketItem {
 
+            }
+            onCurrentItemChanged: {
+                if (tickets.count > 0)
+                    root.state = "ready";
             }
         }
     }
@@ -102,6 +150,20 @@ Item {
             delegate: ProjectItem {
 
             }
+            onCurrentItemChanged: {
+                if (root.state !== "loading")
+                    root.state = "loading";
+                tickets.model.projectId = items.currentItem.project.id;
+            }
+        }
+    }
+
+    Connections {
+        target: tickets.model
+        function onPushed(count) {
+            // check if no items were pushed and list is empty
+            if (count + tickets.count === 0)
+                root.state = "noTicketsPresent";
         }
     }
 }
