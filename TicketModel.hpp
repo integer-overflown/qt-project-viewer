@@ -9,10 +9,8 @@ class TicketModel : public DataListModelTemplate<Ticket>
 {
     Q_OBJECT
     Q_PROPERTY(int projectId WRITE setId MEMBER _id NOTIFY projectIdChanged)
-    Q_PROPERTY(int invalid MEMBER invalid CONSTANT)
     QML_ELEMENT
 public:
-    static constexpr int invalid = -1;
     TicketModel();
 public slots:
     void setId(int);
@@ -20,6 +18,6 @@ public slots:
 signals:
     void projectIdChanged();
 private:
-    int _id { invalid };
+    int _id;
 };
 #endif // QMLTEST_TICKET_MODEL_H
