@@ -7,15 +7,17 @@ int IndicesListModel::rowCount(const QModelIndex& parent) const
 
 void IndicesListModel::push(int count)
 {
-    beginInsertRows(QModelIndex{}, _count, _count + count - 1);
+    auto first = _count, last = first + count - 1;
+    beginInsertRows(QModelIndex{}, first, last);
     _count += count;
     endInsertRows();
+    emit pushed(count);
 }
-
 
 void IndicesListModel::clear()
 {
-    beginRemoveRows(QModelIndex{}, 0, _count - 1);
+    auto last = _count - 1;
+    beginRemoveRows(QModelIndex{}, 0, last);
     _count = 0;
     endRemoveRows();
 }

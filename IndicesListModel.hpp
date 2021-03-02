@@ -13,6 +13,7 @@ public:
     // are going to be overriden by children
 signals:
     void tokenChanged();
+    void pushed(int);
 protected:
     // mimic list data structure just to record length changes
     void push(int count = 1);
