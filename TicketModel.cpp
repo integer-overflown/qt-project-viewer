@@ -20,3 +20,8 @@ void TicketModel::setId(int id)
         });
     }
 }
+
+void TicketModel::clear()
+{
+    DataListModelTemplate<Ticket>::clear();
+}

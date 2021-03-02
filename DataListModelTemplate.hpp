@@ -39,6 +39,12 @@ public:
         IndicesListModel::push(modelData.size());
     }
 
+    void clear()
+    {
+        IndicesListModel::clear();
+        modelData.clear();
+    }
+
 protected:
     Container modelData;
 private:

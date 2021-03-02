@@ -16,6 +16,7 @@ public:
     TicketModel();
 public slots:
     void setId(int);
+    Q_INVOKABLE void clear();
 signals:
     void projectIdChanged();
 private:
