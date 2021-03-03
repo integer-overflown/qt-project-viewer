@@ -9,6 +9,10 @@ Item {
     id: root
     signal submit(string token)
 
+    function verifyLoginAttempt() {
+        Authenticator.verify(login.text, password.text);
+    }
+
     states: [
         State {
             name: "normal"
@@ -108,6 +112,7 @@ Item {
             Layout.preferredWidth: credentials.itemWidth
             Layout.preferredHeight: credentials.itemHeight
             placeholderText: "Login"
+            Component.onCompleted: forceActiveFocus()
         }
 
         CustomComponents.CredentialsField {
@@ -118,6 +123,10 @@ Item {
             Layout.preferredHeight: credentials.itemHeight
             placeholderText: "Password"
             echoMode: TextInput.Password
+            Keys.onPressed: {
+                if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter)
+                    verifyLoginAttempt();
+            }
         }
 
         Button {
@@ -136,9 +145,7 @@ Item {
                 color: submit.down ? "#00376f" : "#2a609e" //TODO: maybe add light variant for 'hovered' state
                 radius: 2
             }
-            onClicked: {
-                Authenticator.verify(login.text, password.text);
-            }
+            onClicked: root.verifyLoginAttempt()
             HoverHandler {
                 cursorShape: Qt.PointingHandCursor
             }
