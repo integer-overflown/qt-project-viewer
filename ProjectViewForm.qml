@@ -2,7 +2,7 @@
 import QtQuick.Controls
 
 import com.overflown.qmlcomponents
-import "qrc:/components"
+import "qrc:/components" as CustomComponents
 
 Item {
     id: root
@@ -102,7 +102,7 @@ Item {
                 token: root.token
             }
             spacing: itemSpacing
-            delegate: TicketItem {
+            delegate: CustomComponents.TicketItem {
 
             }
             onCurrentItemChanged: {
@@ -147,7 +147,7 @@ Item {
                 width: parent.width
                 height: items.paddingY
             }
-            delegate: ProjectItem {
+            delegate: CustomComponents.ProjectItem {
 
             }
             onCurrentItemChanged: {
