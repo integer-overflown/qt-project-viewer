@@ -7,6 +7,7 @@ import com.overflown.qmlcomponents
 
 Item {
     id: root
+    property bool isBeingVerified: false
     signal submit(string token)
 
     function verifyLoginAttempt() {
@@ -42,6 +43,7 @@ Item {
     ]
 
     state: "normal"
+    onStateChanged: isBeingVerified = false
 
     transitions: Transition {
         PropertyAnimation {
@@ -145,7 +147,12 @@ Item {
                 color: submit.down ? "#00376f" : "#2a609e" //TODO: maybe add light variant for 'hovered' state
                 radius: 2
             }
-            onClicked: root.verifyLoginAttempt()
+            onClicked: {
+                if (!isBeingVerified) {
+                    isBeingVerified = true;
+                    root.verifyLoginAttempt();
+                }
+            }
             HoverHandler {
                 cursorShape: Qt.PointingHandCursor
             }
