@@ -8,6 +8,7 @@
 	<file>components/ProjectItem.qml</file>
 	<file>components/TicketItem.qml</file>
 	<file>components/ErrorMessage.qml</file>
+	<file>components/BasicForm.qml</file>
 	<!-- JavaScript files -->
 	<file>scripts/util.js</file>
     </qresource>
