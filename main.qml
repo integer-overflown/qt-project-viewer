@@ -10,10 +10,12 @@ Window {
     id: root
     width: 640
     height: 480
-    x: (Screen.desktopAvailableWidth - root.width) / 2
-    y: (Screen.desktopAvailableHeight - root.height) / 2
     visible: true
     title: qsTr("ProjectViewer")
+    Component.onCompleted: {
+        setX((Screen.desktopAvailableWidth - width) / 2);
+        setY((Screen.desktopAvailableHeight - height) / 2);
+    }
 
     Rectangle {
         id: background
