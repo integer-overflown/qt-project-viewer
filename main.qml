@@ -31,6 +31,15 @@ Window {
                 duration: 500
             }
         }
+        popEnter: Transition {
+            PropertyAnimation {
+                property: "x"
+                from: -window.width
+                to: 0
+                duration: 500
+            }
+        }
+        pushEnter: replaceEnter
 
         replaceExit: Transition {
             PropertyAnimation {
@@ -40,6 +49,16 @@ Window {
                 duration: 500
             }
         }
+        popExit: Transition {
+            PropertyAnimation {
+                property: "x"
+                from: 0
+                to: window.width
+                duration: 500
+            }
+        }
+        pushExit: replaceExit
+
     }
 
     LoginForm {
