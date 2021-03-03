@@ -5,6 +5,7 @@ import QtQuick.Layouts
 import QtQml
 
 import "qrc:/forms"
+import "scripts/util.js" as Utils
 
 Window {
     id: window
@@ -44,15 +45,8 @@ Window {
     LoginForm {
         id: root
         onSubmit: {
-            const componentFactory = Qt.createComponent("qrc:/forms/ProjectViewForm.qml");
-            switch(componentFactory.status) {
-            case Component.Ready:
-                const object = componentFactory.createObject(window, { token: token });
-                forms.replace(object);
-                return;
-            case Component.Error:
-                console.log(componentFactory.errorString());
-            }
+            const o = Utils.instantiateObject("qrc:/forms/ProjectViewForm.qml", window, { token: token });
+            forms.replace(o);
         }
     }
 }
