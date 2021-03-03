@@ -8,9 +8,12 @@
 	<file>components/ProjectItem.qml</file>
 	<file>components/TicketItem.qml</file>
 	<file>components/ErrorMessage.qml</file>
+	<!-- JavaScript files -->
+	<file>scripts/util.js</file>
     </qresource>
     <qresource prefix="/forms">
 	<file>LoginForm.qml</file>
 	<file>ProjectViewForm.qml</file>
+	<file>EditTicketForm.qml</file>
     </qresource>
 </RCC>
