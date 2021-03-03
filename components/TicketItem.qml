@@ -17,6 +17,7 @@ Component {
             topPadding: 8
             bottomPadding: 4
             leftPadding: 8
+            rightPadding: 8
             spacing: 8
             Text {
                 text: delegate.ticket.name
@@ -27,8 +28,8 @@ Component {
             }
             Text {
                 text: delegate.ticket.description ? delegate.ticket.description : "No description"
-                width: delegate.width - parent.leftPadding
-                elide: Text.ElideRight
+                width: delegate.width - parent.leftPadding - parent.rightPadding
+                wrapMode: Text.Wrap
                 font {
                     italic: !delegate.ticket.description
                     pointSize: 12
