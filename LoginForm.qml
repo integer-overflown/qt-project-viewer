@@ -46,6 +46,26 @@ Item {
         }
     }
 
+    Dialog {
+        id: unknownErrorDialog
+        property string reason: ""
+
+        anchors.centerIn: parent
+        title: "Network error"
+        standardButtons: Dialog.Ok
+        visible: root.state === "unknownError"
+        onClosed: root.state = "normal"
+        modal: true
+
+        Text {
+            anchors.centerIn: parent
+            text:
+                "Something went wrong while connecting to a server.<br>"
+                + "Please, check our connection and try again.<br>"
+                + "<b>Reason</b>: " + unknownErrorDialog.reason
+        }
+    }
+
     Rectangle {
         id: background
         anchors.fill: parent
@@ -147,7 +167,8 @@ Item {
             root.state = "rejected";
         }
         function onError(error) {
-            console.log("Error: ", error);
+            unknownErrorDialog.reason = error;
+            root.state = "unknownError";
         }
     }
 }
