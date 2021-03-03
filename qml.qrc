@@ -2,6 +2,7 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>images/q_letter.png</file>
+	<file>images/arrow_back.svg</file>
 	<!-- QML resources -->
 	<file>components/CredentialsField.qml</file>
 	<file>components/Separator.qml</file>
