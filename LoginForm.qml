@@ -9,10 +9,59 @@ Item {
     id: root
     signal submit(string token)
 
+    states: [
+        State {
+            name: "normal"
+            PropertyChanges {
+                target: loginError
+                x: loginError.posX
+            }
+            PropertyChanges {
+                target: passwordError
+                x: loginError.posX
+            }
+        },
+        State {
+            name: "rejected"
+            PropertyChanges {
+                target: loginError
+                x: loginError.posX + login.width
+            }
+            PropertyChanges {
+                target: passwordError
+                x: passwordError.posX + password.width
+            }
+        },
+        State {
+            name: "unknownError"
+        }
+    ]
+
+    state: "normal"
+
+    transitions: Transition {
+        PropertyAnimation {
+            property: "x"
+            duration: 250
+        }
+    }
+
     Rectangle {
         id: background
         anchors.fill: parent
         color: "steelblue"
+    }
+
+    CustomComponents.ErrorMessage {
+        id: loginError
+        posX: credentials.x + login.x + login.fieldLeftPadding
+        posY: credentials.y + login.y + (login.height - height) / 2
+    }
+
+    CustomComponents.ErrorMessage {
+        id: passwordError
+        posX: credentials.x + password.x + password.fieldLeftPadding
+        posY: credentials.y + password.y + (password.height - height) / 2
     }
 
     ColumnLayout {
@@ -34,6 +83,7 @@ Item {
 
         CustomComponents.CredentialsField {
             id: login
+            stateSource: root
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredWidth: credentials.itemWidth
             Layout.preferredHeight: credentials.itemHeight
@@ -42,6 +92,7 @@ Item {
 
         CustomComponents.CredentialsField {
             id: password
+            stateSource: root
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredWidth: credentials.itemWidth
             Layout.preferredHeight: credentials.itemHeight
@@ -71,19 +122,6 @@ Item {
             HoverHandler {
                 cursorShape: Qt.PointingHandCursor
             }
-            // handle authentication attemps
-            Connections {
-                target: Authenticator
-                function onSubmitted(token) {
-                    root.submit(token);
-                }
-                function onRejected() {
-                    console.log("Reject!"); // TODO: display a message
-                }
-                function onError(error) {
-                    console.log("Error: ", error);
-                }
-            }
         }
 
         Text {
@@ -97,6 +135,19 @@ Item {
                 id: hoverHandler
                 cursorShape: Qt.PointingHandCursor
             }
+        }
+    }
+    // handle authentication attemps
+    Connections {
+        target: Authenticator
+        function onSubmitted(token) {
+            root.submit(token);
+        }
+        function onRejected() {
+            root.state = "rejected";
+        }
+        function onError(error) {
+            console.log("Error: ", error);
         }
     }
 }
