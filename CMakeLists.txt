@@ -29,6 +29,29 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick REQUIRED)
 
 set(PROJECT_SOURCES
         main.cpp
+        Authenticator.hpp
+        Authenticator.cpp
+        ApiClient.hpp
+        ApiClient.cpp
+        ProjectContentProvider.hpp
+        ProjectContentProvider.cpp
+        Project.hpp
+        ProjectModel.hpp
+        ProjectModel.cpp
+        RoundImage.hpp
+        RoundImage.cpp
+        TicketContentProvider.hpp
+        TicketContentProvider.cpp
+        Ticket.hpp
+        TicketModel.hpp
+        TicketModel.cpp
+        IndicesListModel.hpp
+        IndicesListModel.cpp
+        DataListModelTemplate.hpp
+        ContentProvider.hpp
+        PriorityWidget.hpp
+        PriorityWidget.cpp
+        private/Credentials.hpp
         qml.qrc
 )
 
@@ -52,3 +75,9 @@ target_compile_definitions(qmltest
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(qmltest
   PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick)
+set_target_properties(qmltest PROPERTIES
+    QT_QML_MODULE_VERSION 1.0
+    QT_QML_MODULE_URI com.overflown.qmlcomponents
+)
+qt6_qml_type_registration(qmltest)
+

@@ -1,7 +1,15 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-	<file>components/CredentialsField.qml</file>
         <file>images/q_letter.png</file>
+	<!-- QML resources -->
+	<file>components/CredentialsField.qml</file>
+	<file>components/Separator.qml</file>
+	<file>components/ProjectItem.qml</file>
+	<file>components/TicketItem.qml</file>
+    </qresource>
+    <qresource prefix="/forms">
+	<file>LoginForm.qml</file>
+	<file>ProjectViewForm.qml</file>
     </qresource>
 </RCC>

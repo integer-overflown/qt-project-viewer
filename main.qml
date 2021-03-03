@@ -1,13 +1,13 @@
-import QtQuick 2.15
-import QtQuick.Window 2.15
-import QtQuick.Controls 2.5
-import QtQuick.Layouts 1.3
-import QtQml 2.3
+import QtQuick
+import QtQuick.Window
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQml
 
-import "components" as CustomComponents
+import "qrc:/forms"
 
 Window {
-    id: root
+    id: window
     width: 640
     height: 480
     visible: true
@@ -17,75 +17,41 @@ Window {
         setY((Screen.desktopAvailableHeight - height) / 2);
     }
 
-    Rectangle {
-        id: background
+    StackView {
+        id: forms
+        initialItem: root
         anchors.fill: parent
-        color: "steelblue"
+
+        replaceEnter: Transition {
+            PropertyAnimation {
+                property: "x"
+                from: window.width
+                to: 0
+                duration: 500
+            }
+        }
+
+        replaceExit: Transition {
+            PropertyAnimation {
+                property: "x"
+                from: 0
+                to: -window.width
+                duration: 500
+            }
+        }
     }
 
-    ColumnLayout {
-        readonly property real itemWidth: root.width / 4
-        readonly property real itemHeight: 36
-
-        id: credentials
-        anchors.centerIn: parent
-        spacing: 16
-
-        Image {
-            id: letter
-            source: "qrc:/images/q_letter.png"
-            Layout.alignment: Qt.AlignHCenter
-            Layout.preferredWidth: 180
-            Layout.preferredHeight: 90
-            Layout.bottomMargin: 8
-        }
-
-        CustomComponents.CredentialsField {
-            Layout.alignment: Qt.AlignHCenter
-            Layout.preferredWidth: credentials.itemWidth
-            Layout.preferredHeight: credentials.itemHeight
-            placeholderText: "Login"
-        }
-
-        CustomComponents.CredentialsField {
-            Layout.alignment: Qt.AlignHCenter
-            Layout.preferredWidth: credentials.itemWidth
-            Layout.preferredHeight: credentials.itemHeight
-            placeholderText: "Password"
-            echoMode: TextInput.Password
-        }
-
-        Button {
-            id: submit
-            Layout.alignment: Qt.AlignHCenter
-            Layout.preferredWidth: credentials.itemWidth
-            Layout.preferredHeight: credentials.itemHeight
-            contentItem: Text {
-                text: "Login"
-                font.bold: true
-                color: "white"
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-            }
-            background: Rectangle {
-                color: submit.down ? "#00376f" : "#2a609e" //TODO: maybe add light variant for 'hovered' state
-                radius: 2
-            }
-            HoverHandler {
-                cursorShape: Qt.PointingHandCursor
-            }
-        }
-
-        Text {
-            id: restorePassword
-            Layout.alignment: Qt.AlignHCenter
-            font.pointSize: 10
-            text: "Forgot your password?"
-            opacity: hoverHandler.hovered ? 1 : 0.6
-            color: "white"
-            HoverHandler {
-                id: hoverHandler
-                cursorShape: Qt.PointingHandCursor
+    LoginForm {
+        id: root
+        onSubmit: {
+            const componentFactory = Qt.createComponent("qrc:/forms/ProjectViewForm.qml");
+            switch(componentFactory.status) {
+            case Component.Ready:
+                const object = componentFactory.createObject(window, { token: token });
+                forms.replace(object);
+                return;
+            case Component.Error:
+                console.log(componentFactory.errorString());
             }
         }
     }
