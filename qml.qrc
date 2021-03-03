@@ -7,6 +7,7 @@
 	<file>components/Separator.qml</file>
 	<file>components/ProjectItem.qml</file>
 	<file>components/TicketItem.qml</file>
+	<file>components/ErrorMessage.qml</file>
     </qresource>
     <qresource prefix="/forms">
 	<file>LoginForm.qml</file>
