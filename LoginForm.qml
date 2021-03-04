@@ -11,7 +11,10 @@ Item {
     signal submit(string token)
 
     function verifyLoginAttempt() {
-        Authenticator.verify(login.text, password.text);
+        if (!isBeingVerified) {
+            isBeingVerified = true;
+            Authenticator.verify(login.text, password.text);
+        }
     }
 
     states: [
@@ -147,12 +150,7 @@ Item {
                 color: submit.down ? "#00376f" : "#2a609e" //TODO: maybe add light variant for 'hovered' state
                 radius: 2
             }
-            onClicked: {
-                if (!isBeingVerified) {
-                    isBeingVerified = true;
-                    root.verifyLoginAttempt();
-                }
-            }
+            onClicked: root.verifyLoginAttempt();
             HoverHandler {
                 cursorShape: Qt.PointingHandCursor
             }
