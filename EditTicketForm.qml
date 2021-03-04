@@ -96,15 +96,16 @@ CustomComponents.BasicForm {
         }
     }
 
-    Column {
+    ColumnLayout {
         anchors {
             top: priorities.bottom
             topMargin: 16
             right: parent.right
-            bottom: parent.bottom
+            rightMargin: 16
             left: parent.left
+            leftMargin: 16
         }
-        leftPadding: 16
+        spacing: 16
         RowLayout {
             Widgets.PriorityWidget {
                 Layout.preferredWidth: 80
@@ -114,6 +115,7 @@ CustomComponents.BasicForm {
                 colorInactive: 'white'
             }
             TextInput {
+                id: title
                 Layout.alignment: Qt.AlignVCenter
                 font {
                     bold: true
@@ -128,9 +130,50 @@ CustomComponents.BasicForm {
                 }
 
                 onActiveFocusChanged: {
-                    if (!activeFocus && !text.length)
-                        text = root.ticket.name
+                    if (!activeFocus && !text.length) text = root.ticket.name
                 }
+            }
+        }
+
+        Flickable {
+            id: flickable
+            Layout.preferredHeight: contentHeight
+            contentWidth: width
+            contentHeight: textArea.implicitHeight
+            clip: true
+            Layout.fillWidth: true
+            // limits to five lines at most
+            Layout.maximumHeight: (contentHeight / textArea.lineCount) * 5 + textArea.topPadding + textArea.bottomPadding
+
+            TextArea.flickable: TextArea {
+                id: textArea
+                background: Rectangle {
+                    radius: 4
+                }
+                text: root.ticket.description
+                cursorPosition: root.ticket.description.length
+                topPadding: 12
+                bottomPadding: 12
+                placeholderText: "<i>Description</i>"
+                wrapMode: Text.Wrap
+                KeyNavigation.priority: KeyNavigation.BeforeItem
+                KeyNavigation.tab: title
+            }
+            ScrollBar.vertical: ScrollBar {}
+            boundsMovement: Flickable.StopAtBounds
+            boundsBehavior: Flickable.DragAndOvershootBounds
+        }
+
+        Row {
+            spacing: 8
+            Layout.alignment: Qt.AlignRight
+            CustomComponents.RoundButton {
+                text: "Cancel"
+                height: 32
+            }
+            CustomComponents.RoundButton {
+                text: "Confirm"
+                height: 32
             }
         }
     }
