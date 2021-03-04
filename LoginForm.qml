@@ -131,30 +131,17 @@ Item {
             }
         }
 
-        Button {
+        CustomComponents.RoundButton {
             id: submit
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredWidth: credentials.itemWidth
             Layout.preferredHeight: credentials.itemHeight
-            contentItem: Text {
-                text: "Login"
-                font.bold: true
-                color: "white"
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-            }
-            background: Rectangle {
-                color: submit.down ? "#00376f" : "#2a609e" //TODO: maybe add light variant for 'hovered' state
-                radius: 2
-            }
+            text: "Login"
             onClicked: {
                 if (!isBeingVerified) {
                     isBeingVerified = true;
                     root.verifyLoginAttempt();
                 }
-            }
-            HoverHandler {
-                cursorShape: Qt.PointingHandCursor
             }
         }
 

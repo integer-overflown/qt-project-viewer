@@ -10,6 +10,7 @@
 	<file>components/TicketItem.qml</file>
 	<file>components/ErrorMessage.qml</file>
 	<file>components/BasicForm.qml</file>
+	<file>components/RoundButton.qml</file>
 	<!-- JavaScript files -->
 	<file>scripts/util.js</file>
     </qresource>
