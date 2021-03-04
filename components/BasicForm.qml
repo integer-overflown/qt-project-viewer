@@ -4,8 +4,8 @@ Item {
     id: root
     required property string title
     property var header : header
-
     property var validator: DoubleValidator {}
+    signal backClicked
 
     // background
     Rectangle {
@@ -35,6 +35,28 @@ Item {
                 horizontalAlignment: TextInput.AlignHCenter
             }
         }
+    }
+
+    Image {
+        id: abc
+        source: "qrc:/images/arrow_back.svg"
+        width: 24
+        height: 24
+        anchors {
+            verticalCenter: header.verticalCenter
+            left: parent.left
+            leftMargin: 12
+        }
+        HoverHandler {
+            cursorShape: Qt.PointingHandCursor
+        }
+        TapHandler {
+            onTapped: backClicked()
+        }
+        // forms is id of main app window's stack view
+        // defined in main.qml
+        // StackView.view attached prop is not initialized during creation of this component
+        visible: !forms.busy && forms.depth > 1
     }
 
     // shadow under header
