@@ -1,7 +1,9 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Layouts
 
 import "qrc:/components" as CustomComponents
+import com.overflown.qmlcomponents as Widgets
 
 CustomComponents.BasicForm {
     id: root
@@ -42,7 +44,6 @@ CustomComponents.BasicForm {
             readonly property int horizontalPadding: 12
             readonly property int verticalPadding: 8
 
-            anchors.verticalCenter: parent.verticalCenter
             implicitWidth: priority.width + 2 * horizontalPadding
             implicitHeight: priority.height + 2 * verticalPadding
             radius: width / 4
@@ -70,6 +71,7 @@ CustomComponents.BasicForm {
     }
 
     ScrollView {
+        id: priorities
         ScrollBar.vertical.policy: ScrollBar.AlwaysOff
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
         anchors {
@@ -81,7 +83,6 @@ CustomComponents.BasicForm {
         leftPadding: 16
         rightPadding: 16
         ListView {
-            id: priorities
             contentHeight: contentItem.childrenRect.height
             orientation: Qt.Horizontal
             spacing: 8
@@ -90,8 +91,42 @@ CustomComponents.BasicForm {
         }
     }
 
-    Text {
-        anchors.centerIn: parent
-        text: "Hello, " + ticket.name
+    Column {
+        anchors {
+            top: priorities.bottom
+            topMargin: 16
+            right: parent.right
+            bottom: parent.bottom
+            left: parent.left
+        }
+        leftPadding: 16
+        RowLayout {
+            Widgets.PriorityWidget {
+                Layout.preferredWidth: 80
+                Layout.preferredHeight: 20
+                Layout.alignment: Qt.AlignVCenter
+                priority: root.ticket.priority
+                colorInactive: 'white'
+            }
+            TextInput {
+                Layout.alignment: Qt.AlignVCenter
+                font {
+                    bold: true
+                    pointSize: 16
+                }
+                text: root.ticket.name
+                selectByMouse: true
+
+                HoverHandler {
+                    // caret to indicate ability of receiving text input
+                    cursorShape: Qt.IBeamCursor
+                }
+
+                onActiveFocusChanged: {
+                    if (!activeFocus && !text.length)
+                        text = root.ticket.name
+                }
+            }
+        }
     }
 }
