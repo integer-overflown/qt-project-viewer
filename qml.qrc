@@ -2,15 +2,21 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>images/q_letter.png</file>
+	<file>images/arrow_back.svg</file>
 	<!-- QML resources -->
 	<file>components/CredentialsField.qml</file>
 	<file>components/Separator.qml</file>
 	<file>components/ProjectItem.qml</file>
 	<file>components/TicketItem.qml</file>
 	<file>components/ErrorMessage.qml</file>
+	<file>components/BasicForm.qml</file>
+	<file>components/RoundButton.qml</file>
+	<!-- JavaScript files -->
+	<file>scripts/util.js</file>
     </qresource>
     <qresource prefix="/forms">
 	<file>LoginForm.qml</file>
 	<file>ProjectViewForm.qml</file>
+	<file>EditTicketForm.qml</file>
     </qresource>
 </RCC>

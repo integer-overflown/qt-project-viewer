@@ -2,11 +2,13 @@
 import QtQuick.Controls
 
 import com.overflown.qmlcomponents
-import "qrc:/components"
+import "qrc:/components" as CustomComponents
 
-Item {
+CustomComponents.BasicForm {
     id: root
     required property string token
+
+    title: "All projects"
 
     states: [
         State {
@@ -26,12 +28,6 @@ Item {
     ]
 
     state: "loading"
-
-    // background
-    Rectangle {
-        anchors.fill: parent
-        color: "lightgray"
-    }
 
     Rectangle {
         id: contentArea
@@ -59,28 +55,6 @@ Item {
         visible: root.state === "noTicketsPresent"
     }
 
-    Rectangle {
-        id: header
-        width: parent.width
-        height: 40
-        Row {
-            anchors.centerIn: parent
-            height: parent.height
-            spacing: 4
-            Image {
-                source: "qrc:/images/q_letter.png"
-                anchors.verticalCenter: parent.verticalCenter
-                width: 40
-                height: 20
-            }
-            Text {
-                text: "All projects"
-                font.pointSize: 14
-                anchors.verticalCenter: parent.verticalCenter
-                horizontalAlignment: TextInput.AlignHCenter
-            }
-        }
-    }
     ScrollView {
         readonly property int itemPadding: 16
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
@@ -93,6 +67,7 @@ Item {
         topPadding: tickets.itemSpacing
         leftPadding: itemPadding
         clip: true
+        z: -1
         ListView {
             id: tickets
             property real itemWidth: root.width - (itemsScroll.width + 2 * parent.itemPadding)
@@ -102,7 +77,7 @@ Item {
                 token: root.token
             }
             spacing: itemSpacing
-            delegate: TicketItem {
+            delegate: CustomComponents.TicketItem {
 
             }
             onCurrentItemChanged: {
@@ -111,16 +86,7 @@ Item {
             }
         }
     }
-    // shadow under header
-    Rectangle {
-        anchors.top: header.bottom
-        width: header.width
-        height: 6
-        gradient: Gradient {
-            GradientStop { position: 0; color: "gray" }
-            GradientStop { position: 1; color: "lightgray" }
-        }
-    }
+
     ScrollView {
         id: itemsScroll
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
@@ -147,7 +113,7 @@ Item {
                 width: parent.width
                 height: items.paddingY
             }
-            delegate: ProjectItem {
+            delegate: CustomComponents.ProjectItem {
 
             }
             onCurrentItemChanged: {
