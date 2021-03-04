@@ -155,7 +155,8 @@ CustomComponents.BasicForm {
                 }
 
                 onActiveFocusChanged: {
-                    if (!activeFocus && !text.length) text = root.ticket.name
+                    if (activeFocus) cursorPosition = text.length
+                    else if (!text.length) text = root.ticket.name
                 }
             }
         }
@@ -176,13 +177,13 @@ CustomComponents.BasicForm {
                     radius: 4
                 }
                 text: root.ticket.description
-                cursorPosition: root.ticket.description.length
                 topPadding: 12
                 bottomPadding: 12
                 placeholderText: "<i>Description</i>"
                 wrapMode: Text.Wrap
                 KeyNavigation.priority: KeyNavigation.BeforeItem
                 KeyNavigation.tab: title
+                onActiveFocusChanged: cursorPosition = text.length
             }
             ScrollBar.vertical: ScrollBar {}
             boundsMovement: Flickable.StopAtBounds
