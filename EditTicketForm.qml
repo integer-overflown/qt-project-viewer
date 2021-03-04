@@ -28,16 +28,17 @@ CustomComponents.BasicForm {
 
     ListModel {
         id: priorityNames
-        ListElement { name: "Minor" }
-        ListElement { name: "Revision" }
-        ListElement { name: "Normal" }
-        ListElement { name: "Important" }
-        ListElement { name: "Hotfix" }
+        ListElement { name: "Minor"; color: '#b1cddb' }
+        ListElement { name: "Revision"; color: '#819ca9' }
+        ListElement { name: "Normal"; color: '#546e7a' }
+        ListElement { name: "Important"; color: '#ffca28' }
+        ListElement { name: "Hotfix"; color: '#fb8c00' }
     }
 
     Component {
         id: priorityItem
         Rectangle {
+            id: delegate
             readonly property int horizontalPadding: 12
             readonly property int verticalPadding: 8
 
@@ -45,11 +46,25 @@ CustomComponents.BasicForm {
             implicitWidth: priority.width + 2 * horizontalPadding
             implicitHeight: priority.height + 2 * verticalPadding
             radius: width / 4
+            border {
+                width: 1
+                color: model.color
+            }
+            color: ListView.isCurrentItem ? model.color : 'white'
 
             Text {
                 id: priority
                 anchors.centerIn: parent
-                text: modelData
+                text: model.name
+                color: delegate.ListView.isCurrentItem ? 'white' : 'black'
+            }
+
+            TapHandler {
+                onTapped: delegate.ListView.view.currentIndex = index;
+            }
+
+            HoverHandler {
+                cursorShape: Qt.PointingHandCursor
             }
         }
     }
