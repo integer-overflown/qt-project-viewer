@@ -61,7 +61,10 @@ CustomComponents.BasicForm {
             }
 
             TapHandler {
-                onTapped: delegate.ListView.view.currentIndex = index;
+                onTapped: {
+                    root.ticket.priority = index + 1
+                    delegate.ListView.view.currentIndex = index
+                }
             }
 
             HoverHandler {
@@ -83,11 +86,13 @@ CustomComponents.BasicForm {
         leftPadding: 16
         rightPadding: 16
         ListView {
+            id: priorityList
             contentHeight: contentItem.childrenRect.height
             orientation: Qt.Horizontal
             spacing: 8
             model: priorityNames
             delegate: priorityItem
+            currentIndex: root.ticket.priority - 1  // doesn't create a binding since ticket is not a QObject
         }
     }
 
@@ -105,7 +110,7 @@ CustomComponents.BasicForm {
                 Layout.preferredWidth: 80
                 Layout.preferredHeight: 20
                 Layout.alignment: Qt.AlignVCenter
-                priority: root.ticket.priority
+                priority: priorityList.currentIndex + 1
                 colorInactive: 'white'
             }
             TextInput {
