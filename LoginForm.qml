@@ -25,11 +25,13 @@ Item {
             name: "rejected"
             PropertyChanges {
                 target: loginError
-                x: loginError.posX + login.width
+                explicit: true // prevents binding of the changed property
+                x: x + login.width
             }
             PropertyChanges {
                 target: passwordError
-                x: passwordError.posX + password.width
+                explicit: true
+                x: x + password.width
             }
             PropertyChanges {
                 target: login
@@ -83,14 +85,14 @@ Item {
 
     CustomComponents.ErrorMessage {
         id: loginError
-        posX: credentials.x + login.x + login.fieldLeftPadding
-        posY: credentials.y + login.y + (login.height - height) / 2
+        x: credentials.x + login.x + login.fieldLeftPadding
+        y: credentials.y + login.y + (login.height - height) / 2
     }
 
     CustomComponents.ErrorMessage {
         id: passwordError
-        posX: credentials.x + password.x + password.fieldLeftPadding
-        posY: credentials.y + password.y + (password.height - height) / 2
+        x: credentials.x + password.x + password.fieldLeftPadding
+        y: credentials.y + password.y + (password.height - height) / 2
     }
 
     ColumnLayout {
