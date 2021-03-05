@@ -3,7 +3,7 @@ import QtQuick
 Item {
     id: root
     required property string title
-    property var header : header
+    property alias header : header
     property var validator: DoubleValidator {}
     signal backClicked
 
