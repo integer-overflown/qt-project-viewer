@@ -196,7 +196,7 @@ CustomComponents.BasicForm {
             CustomComponents.RoundButton {
                 text: "Cancel"
                 height: 32
-                onClicked: StackView.view.pop();
+                onClicked: root.StackView.view.pop();
             }
             CustomComponents.RoundButton {
                 text: "Confirm"
@@ -204,7 +204,7 @@ CustomComponents.BasicForm {
                 onClicked: {
                     ticket = root.getEditedTicket();
                     // TODO: POST on server
-                    StackView.view.pop();
+                    root.StackView.view.pop();
                 }
             }
         }
