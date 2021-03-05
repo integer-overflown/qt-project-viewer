@@ -20,24 +20,26 @@ Item {
     states: [
         State {
             name: "normal"
-            PropertyChanges {
-                target: loginError
-                x: loginError.posX
-            }
-            PropertyChanges {
-                target: passwordError
-                x: loginError.posX
-            }
         },
         State {
             name: "rejected"
             PropertyChanges {
                 target: loginError
-                x: loginError.posX + login.width
+                explicit: true // prevents binding of the changed property
+                x: x + login.width
             }
             PropertyChanges {
                 target: passwordError
-                x: passwordError.posX + password.width
+                explicit: true
+                x: x + password.width
+            }
+            PropertyChanges {
+                target: login
+                onTextEdited: root.state = "normal"
+            }
+            PropertyChanges {
+                target: password
+                onTextEdited: root.state = "normal"
             }
         },
         State {
@@ -83,14 +85,14 @@ Item {
 
     CustomComponents.ErrorMessage {
         id: loginError
-        posX: credentials.x + login.x + login.fieldLeftPadding
-        posY: credentials.y + login.y + (login.height - height) / 2
+        x: credentials.x + login.x + login.fieldLeftPadding
+        y: credentials.y + login.y + (login.height - height) / 2
     }
 
     CustomComponents.ErrorMessage {
         id: passwordError
-        posX: credentials.x + password.x + password.fieldLeftPadding
-        posY: credentials.y + password.y + (password.height - height) / 2
+        x: credentials.x + password.x + password.fieldLeftPadding
+        y: credentials.y + password.y + (password.height - height) / 2
     }
 
     ColumnLayout {
@@ -105,14 +107,13 @@ Item {
             id: letter
             source: "qrc:/images/q_letter.png"
             Layout.alignment: Qt.AlignHCenter
-            Layout.preferredWidth: 180
-            Layout.preferredHeight: 90
-            Layout.bottomMargin: 8
+            Layout.preferredWidth: 128
+            Layout.preferredHeight: 128
         }
 
         CustomComponents.CredentialsField {
             id: login
-            stateSource: root
+            verifier: root
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredWidth: credentials.itemWidth
             Layout.preferredHeight: credentials.itemHeight
@@ -122,16 +123,12 @@ Item {
 
         CustomComponents.CredentialsField {
             id: password
-            stateSource: root
+            verifier: root
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredWidth: credentials.itemWidth
             Layout.preferredHeight: credentials.itemHeight
             placeholderText: "Password"
             echoMode: TextInput.Password
-            Keys.onPressed: {
-                if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter)
-                    verifyLoginAttempt();
-            }
         }
 
         CustomComponents.RoundButton {

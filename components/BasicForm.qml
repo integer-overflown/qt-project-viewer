@@ -3,7 +3,7 @@ import QtQuick
 Item {
     id: root
     required property string title
-    property var header : header
+    property alias header : header
     property var validator: DoubleValidator {}
     signal backClicked
 
@@ -25,8 +25,8 @@ Item {
             Image {
                 source: "qrc:/images/q_letter.png"
                 anchors.verticalCenter: parent.verticalCenter
-                width: 40
-                height: 20
+                width: 32
+                height: 32
             }
             Text {
                 text: root.title

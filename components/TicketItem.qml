@@ -27,11 +27,12 @@ Rectangle {
             }
         }
         Text {
-            text: delegate.ticket.description ? delegate.ticket.description : "No description"
+            property alias ticket: delegate.ticket
+            text: ticket.description ? ticket.description : "No description"
             width: delegate.width - parent.leftPadding - parent.rightPadding
             wrapMode: Text.Wrap
             font {
-                italic: !delegate.ticket.description
+                italic: !ticket.description
                 pointSize: 12
             }
         }
