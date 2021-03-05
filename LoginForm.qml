@@ -20,14 +20,6 @@ Item {
     states: [
         State {
             name: "normal"
-            PropertyChanges {
-                target: loginError
-                x: loginError.posX
-            }
-            PropertyChanges {
-                target: passwordError
-                x: loginError.posX
-            }
         },
         State {
             name: "rejected"
@@ -38,6 +30,14 @@ Item {
             PropertyChanges {
                 target: passwordError
                 x: passwordError.posX + password.width
+            }
+            PropertyChanges {
+                target: login
+                onTextEdited: root.state = "normal"
+            }
+            PropertyChanges {
+                target: password
+                onTextEdited: root.state = "normal"
             }
         },
         State {
@@ -111,7 +111,7 @@ Item {
 
         CustomComponents.CredentialsField {
             id: login
-            stateSource: root
+            verifier: root
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredWidth: credentials.itemWidth
             Layout.preferredHeight: credentials.itemHeight
@@ -121,16 +121,12 @@ Item {
 
         CustomComponents.CredentialsField {
             id: password
-            stateSource: root
+            verifier: root
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredWidth: credentials.itemWidth
             Layout.preferredHeight: credentials.itemHeight
             placeholderText: "Password"
             echoMode: TextInput.Password
-            Keys.onPressed: {
-                if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter)
-                    verifyLoginAttempt();
-            }
         }
 
         CustomComponents.RoundButton {
