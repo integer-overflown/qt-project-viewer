@@ -1,8 +1,8 @@
-import QtQuick 2.9
-import QtQuick.Controls 2.5
+import QtQuick
+import QtQuick.Controls
 
 TextField {
-    required property var stateSource
+    required property var verifier
     readonly property int fieldLeftPadding: 12
 
     font.italic: true
@@ -11,14 +11,12 @@ TextField {
         color: "#8eaed7"
         radius: 2
         border {
-            width: stateSource.state === "rejected" ? 1 : 0
+            width: verifier.state === "rejected" ? 1 : 0
             color: 'red'
         }
     }
-    onActiveFocusChanged: {
-        if (activeFocus && stateSource.state === "rejected") {
-            stateSource.state = "normal";
-            clear();
-        }
+    Keys.onPressed: {
+        if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter)
+            verifier.verifyLoginAttempt();
     }
 }
