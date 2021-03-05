@@ -25,8 +25,8 @@ Item {
             Image {
                 source: "qrc:/images/q_letter.png"
                 anchors.verticalCenter: parent.verticalCenter
-                width: 40
-                height: 20
+                width: 32
+                height: 32
             }
             Text {
                 text: root.title

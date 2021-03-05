@@ -105,9 +105,8 @@ Item {
             id: letter
             source: "qrc:/images/q_letter.png"
             Layout.alignment: Qt.AlignHCenter
-            Layout.preferredWidth: 180
-            Layout.preferredHeight: 90
-            Layout.bottomMargin: 8
+            Layout.preferredWidth: 128
+            Layout.preferredHeight: 128
         }
 
         CustomComponents.CredentialsField {
